@@ -61,7 +61,7 @@ namespace DearLoveGUI
             var pixels = new byte[width * height * bytesPerPixel];
             unsafe { Marshal.Copy(new IntPtr(pixelData), pixels, 0, pixels.Length); }
 
-            // Create and register the texture as an XNA texture
+            // Create and register the texture
             var tex2d = Graphics.NewImage(Image.NewImageData(width, height, ImageDataPixelFormat.RGBA8, pixels));
             // new Texture2D(_graphicsDevice, width, height, false, SurfaceFormat.Color);
             //tex2d.SetData(pixels);
@@ -109,8 +109,34 @@ namespace DearLoveGUI
         void SetupInput()
         {
             var io = ImGui.GetIO();
-            io.Fonts.AddFontDefault();
+
+            //// key mapping
+            foreach (var ikey in _keys_map)
+            {
+                io.KeyMap[(int)ikey.Key] = (int)(ikey.Value);
+            }
+            //io.ConfigFlags |= ImGui.;
+            //io.Fonts.AddFontDefault();
+            io.Fonts.AddFontFromFileTTF("G:/font/方正准圆_GBK.TTF", 16.0f);
         }
+
+        public void TextInput(string text)
+        {
+            Console.WriteLine(text);
+            //foreach (var c in text)
+            //{
+            //    char.ConvertToUtf32()
+            //    ImGui.GetIO().AddInputCharacter(Encoding.Unicode.getco);
+            //}
+            for (var i = 0; i < text.Length; i += char.IsSurrogatePair(text, i) ? 2 : 1)
+            {
+                var codepoint = char.ConvertToUtf32(text, i);
+                ImGui.GetIO().AddInputCharacter((uint)codepoint);
+            }
+
+            //ImGui.GetIO().AddInputCharactersUTF8(text);
+        }
+
         void UpdateInput(float dt)
         {
             var io = ImGui.GetIO();
@@ -120,10 +146,27 @@ namespace DearLoveGUI
 
             // key
             {
+                //foreach (KeyConstant ks in Enum.GetValues(typeof(KeyConstant)))
+                //{
+                //    bool downFlag = Keyboard.IsDown(ks);
+                //    io.KeysDown[(int)Keyboard.GetScancodeFromKey(ks)] = downFlag;
+                //}
+                foreach (KeyConstant ks in Enum.GetValues(typeof(KeyConstant)))
+                {
+                    bool downFlag = Keyboard.IsDown(ks);
+                    //io.KeysDown[(int)Keyboard.GetScancodeFromKey(ks)] = downFlag;
+                    io.KeysDown[(int)ks] = downFlag;
+                }
+                //io.KeysDown['1'] = Keyboard.IsDown(KeyConstant.Number1);
+                //Scancode.Number1
+                //SDL_Scancode.SDL_SCANCODE_1
+
                 foreach (var ikey in _keys_map)
                 {
-                    io.KeysDown[(int)ikey.Key] = Keyboard.IsDown(ikey.Value);
+                    //io.KeysDown[(int)ikey.Key] = Keyboard.IsDown((ikey.Value));
+                    io.KeysDown[(int)ikey.Value] = Keyboard.IsDown((ikey.Value));
                 }
+
                 io.KeyShift = Keyboard.IsDown(KeyConstant.LShift) || Keyboard.IsDown(KeyConstant.RShift);
                 io.KeyCtrl = Keyboard.IsDown(KeyConstant.LCtrl) || Keyboard.IsDown(KeyConstant.RCtrl);
                 io.KeyAlt = Keyboard.IsDown(KeyConstant.LAlt) || Keyboard.IsDown(KeyConstant.RAlt);
@@ -143,63 +186,14 @@ namespace DearLoveGUI
                     io.MouseDown[i] = Mouse.IsDown(i);
 
                 io.MouseWheel = Mouse.GetScrollY();
+
+
             }
 
         }
 
-        #region buffer info
-        Mesh mesh = Graphics.NewMesh(PositionColorVertex.VertexInfo.formatList, 1, MeshDrawMode.Trangles, SpriteBatchUsage.Dynamic);
 
-        private byte[] _vertexData;
-        private int _vertexBufferSize;
-
-        private ushort[] _indexData;
-        private int _indexBufferSize;
-        #endregion
         readonly int _Vert_Size_ = Marshal.SizeOf<ImDrawVert>();
-        private unsafe void UpdateBuffers(ImDrawDataPtr drawData)
-        {
-            if (drawData.TotalVtxCount == 0)
-            {
-                return;
-            }
-
-            // Expand buffers if we need more room
-            if (drawData.TotalVtxCount > _vertexBufferSize)
-            {
-                _vertexBufferSize = (int)(drawData.TotalVtxCount * 1.5f);
-                _vertexData = new byte[_vertexBufferSize * _Vert_Size_];
-                mesh = Graphics.NewMesh(PositionColorVertex.VertexInfo.formatList, _vertexBufferSize, MeshDrawMode.Trangles, SpriteBatchUsage.Dynamic);
-            }
-
-            if (drawData.TotalIdxCount > _indexBufferSize)
-            {
-                _indexBufferSize = (int)(drawData.TotalIdxCount * 1.5f);
-                _indexData = new ushort[_indexBufferSize];
-            }
-
-            // Copy ImGui's vertices and indices to a set of managed byte arrays
-            int vtxOffset = 0;
-            int idxOffset = 0;
-
-            for (int n = 0; n < drawData.CmdListsCount; n++)
-            {
-                ImDrawListPtr cmdList = drawData.CmdListsRange[n];
-
-                fixed (void* vtxDstPtr = &_vertexData[vtxOffset * _Vert_Size_])
-                fixed (void* idxDstPtr = &_indexData[idxOffset])
-                {
-                    Buffer.MemoryCopy((void*)cmdList.VtxBuffer.Data, vtxDstPtr, _vertexData.Length, cmdList.VtxBuffer.Size * _Vert_Size_);
-                    Buffer.MemoryCopy((void*)cmdList.IdxBuffer.Data, idxDstPtr, _indexData.Length * sizeof(ushort), cmdList.IdxBuffer.Size * sizeof(ushort));
-                }
-                vtxOffset += cmdList.VtxBuffer.Size;
-                idxOffset += cmdList.IdxBuffer.Size;
-            }
-
-            // Copy the managed byte arrays to the gpu vertex- and index buffers
-            mesh.SetVertexMap(Trans(_indexData));
-            //mesh.SetVertices(0, _vertexData);
-        }
 
         static uint[] Trans(ushort[] src)
         {
@@ -209,20 +203,6 @@ namespace DearLoveGUI
                 dest[i] = src[i];
 
             return dest;
-        }
-        public void DrawXXXX()
-        {
-            unsafe
-            {
-                ImDrawDataPtr drawData = ImGui.GetDrawData();
-
-                // update buffer
-                UpdateBuffers(drawData);
-
-                // draw buffer
-                RenderCommandLists(drawData);
-
-            }
         }
 
         public void Draw()
@@ -269,128 +249,378 @@ namespace DearLoveGUI
                 }
 
 
-                Graphics.SetScissor();
             }
-
-
-        }
-
-
-
-        void RenderCommandLists(ImDrawDataPtr drawData)
-        {
-            //var c = mesh.GetVertexCount();
-            //List<Vector2> debug_lines = new List<Vector2>(3000);
-            //for (int i = 0; i < c; i++)
-            //{
-            //    var vv = PositionColorVertex.Transform(mesh.GetVertex(i));
-            //    debug_lines.Add(new Vector2(vv.X, vv.Y));
-            //}
-            ////Graphics.Line(debug_lines.ToArray());
-            //{
-            //    for (int i = 0; i < drawData.TotalIdxCount; i += 3)
-            //    {
-            //        var vd1 = _indexData[i + 0];
-            //        var vd2 = _indexData[i + 1];
-            //        var vd3 = _indexData[i + 2];
-
-            //        var vdd1 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd1, _Vert_Size_).ToArray();
-            //        var vdd2 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd2, _Vert_Size_).ToArray();
-            //        var vdd3 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd3, _Vert_Size_).ToArray();
-
-            //        var pcv1 = PositionColorVertex.Transform(vdd1);
-            //        var pcv2 = PositionColorVertex.Transform(vdd2);
-            //        var pcv3 = PositionColorVertex.Transform(vdd3);
-            //        //Graphics.SetColor(pcv1.Color);
-            //        //Graphics.Polygon(DrawMode.Fill, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
-            //        mesh.SetVertex(vd1, vdd1);
-            //        mesh.SetVertex(vd2, vdd2);
-            //        mesh.SetVertex(vd3, vdd3);
-            //        //Graphics.Polygon(DrawMode.Line, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
-            //        //var data = _vertexData[];
-            //    }
-            //}
-
-            Graphics.SetColor(Color.White);
-            int vtxOffset = 0;
-            int idxOffset = 0;
-            for (int n = 0; n < drawData.CmdListsCount; n++)
-            {
-                ImDrawListPtr cmdList = drawData.CmdListsRange[n];
-
-                for (int cmdi = 0; cmdi < cmdList.CmdBuffer.Size; cmdi++)
-                {
-                    ImDrawCmdPtr drawCmd = cmdList.CmdBuffer[cmdi];
-
-                    if (!_loadedTextures.TryGetValue(drawCmd.TextureId, out var img))
-                        throw new InvalidOperationException($"Could not find a texture with id '{drawCmd.TextureId}', please check your bindings");
-
-                    Graphics.SetScissor(
-                        (int)drawCmd.ClipRect.X,
-                        (int)drawCmd.ClipRect.Y,
-                        (int)(drawCmd.ClipRect.Z - drawCmd.ClipRect.X),
-                        (int)(drawCmd.ClipRect.W - drawCmd.ClipRect.Y)
-                    );
-                    mesh.SetTexture(img);
-
-                    // set range
-                    //drawCmd.ClipRect;
-
-                    {
-                        for (int i = idxOffset; i < idxOffset + (int)drawCmd.ElemCount; i += 3)
-                        {
-                            var vd1 = _indexData[ i + 0 ];
-                            var vd2 = _indexData[ i + 1 ];
-                            var vd3 = _indexData[ i + 2 ];
-
-                            var vdd1 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd1, _Vert_Size_).ToArray();
-                            var vdd2 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd2, _Vert_Size_).ToArray();
-                            var vdd3 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd3, _Vert_Size_).ToArray();
-
-                            //var pcv1 = PositionColorVertex.Transform(vdd1);
-                            //var pcv2 = PositionColorVertex.Transform(vdd2);
-                            //var pcv3 = PositionColorVertex.Transform(vdd3);
-                            //Graphics.SetColor(pcv1.Color);
-                            //Graphics.Polygon(DrawMode.Fill, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
-                            mesh.SetVertex(vd1, vdd1);
-                            mesh.SetVertex(vd2, vdd2);
-                            mesh.SetVertex(vd3, vdd3);
-                            //Graphics.Polygon(DrawMode.Line, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
-                            //var data = _vertexData[];
-                        }
-                    }
-
-
-                    //mesh.SetDrawRange(idxOffset, (int)drawCmd.ElemCount);
-                    mesh.SetDrawRange((int)(idxOffset + drawCmd.IdxOffset), (int)drawCmd.ElemCount);
-                    //mesh.SetDrawRange(vtxOffset, (int)cmdList.VtxBuffer.Size);
-                    //mesh.SetDrawRange(idxOffset, (int)drawCmd.ElemCount / 3);
-                    Graphics.Draw(mesh);
-
-                    //                    foreach (var pass in effect.CurrentTechnique.Passes)
-                    //                    {
-                    //                        pass.Apply();
-
-                    //#pragma warning disable CS0618 // // FNA does not expose an alternative method.
-                    //                        _graphicsDevice.DrawIndexedPrimitives(
-                    //                            primitiveType: PrimitiveType.TriangleList,
-                    //                            baseVertex: vtxOffset,
-                    //                            minVertexIndex: 0,
-                    //                            numVertices: cmdList.VtxBuffer.Size,
-                    //                            startIndex: idxOffset,
-                    //                            primitiveCount: (int)drawCmd.ElemCount / 3
-                    //                        );
-                    //#pragma warning restore CS0618
-                    //                    }
-
-                    idxOffset += (int)drawCmd.ElemCount;
-                }
-                vtxOffset += cmdList.VtxBuffer.Size;
-            }
-
 
             Graphics.SetScissor();
+
         }
+
+
+
+
+
+        //static bool IsDefKeyDown(IoDefKey defkey)
+        //{
+        //    return keyMapping.TryGetValue(defkey, out var key) ? Keyboard.IsDown(key) : false;
+        //}
+
+
+        //static readonly Dictionary<IoDefKey, KeyConstant> keyMapping = new Dictionary<IoDefKey, KeyConstant>()
+        //{
+        //    { IoDefKey.A, Keycon }
+        //};
+
+        //public enum IoDefKey
+        //{
+        //    None = 0,
+        //    Back = 8,
+        //    Tab = 9,
+        //    Enter = 13,
+        //    Pause = 19,
+        //    CapsLock = 20,
+        //    Kana = 21,
+        //    Kanji = 25,
+        //    Escape = 27,
+        //    ImeConvert = 28,
+        //    ImeNoConvert = 29,
+        //    Space = 32,
+        //    PageUp = 33,
+        //    PageDown = 34,
+        //    End = 35,
+        //    Home = 36,
+        //    Left = 37,
+        //    Up = 38,
+        //    Right = 39,
+        //    Down = 40,
+        //    Select = 41,
+        //    Print = 42,
+        //    Execute = 43,
+        //    PrintScreen = 44,
+        //    Insert = 45,
+        //    Delete = 46,
+        //    Help = 47,
+        //    D0 = 48,
+        //    D1 = 49,
+        //    D2 = 50,
+        //    D3 = 51,
+        //    D4 = 52,
+        //    D5 = 53,
+        //    D6 = 54,
+        //    D7 = 55,
+        //    D8 = 56,
+        //    D9 = 57,
+        //    A = 65,
+        //    B = 66,
+        //    C = 67,
+        //    D = 68,
+        //    E = 69,
+        //    F = 70,
+        //    G = 71,
+        //    H = 72,
+        //    I = 73,
+        //    J = 74,
+        //    K = 75,
+        //    L = 76,
+        //    M = 77,
+        //    N = 78,
+        //    O = 79,
+        //    P = 80,
+        //    Q = 81,
+        //    R = 82,
+        //    S = 83,
+        //    T = 84,
+        //    U = 85,
+        //    V = 86,
+        //    W = 87,
+        //    X = 88,
+        //    Y = 89,
+        //    Z = 90,
+        //    LeftWindows = 91,
+        //    RightWindows = 92,
+        //    Apps = 93,
+        //    Sleep = 95,
+        //    NumPad0 = 96,
+        //    NumPad1 = 97,
+        //    NumPad2 = 98,
+        //    NumPad3 = 99,
+        //    NumPad4 = 100,
+        //    NumPad5 = 101,
+        //    NumPad6 = 102,
+        //    NumPad7 = 103,
+        //    NumPad8 = 104,
+        //    NumPad9 = 105,
+        //    Multiply = 106,
+        //    Add = 107,
+        //    Separator = 108,
+        //    Subtract = 109,
+        //    Decimal = 110,
+        //    Divide = 111,
+        //    F1 = 112,
+        //    F2 = 113,
+        //    F3 = 114,
+        //    F4 = 115,
+        //    F5 = 116,
+        //    F6 = 117,
+        //    F7 = 118,
+        //    F8 = 119,
+        //    F9 = 120,
+        //    F10 = 121,
+        //    F11 = 122,
+        //    F12 = 123,
+        //    F13 = 124,
+        //    F14 = 125,
+        //    F15 = 126,
+        //    F16 = 127,
+        //    F17 = 128,
+        //    F18 = 129,
+        //    F19 = 130,
+        //    F20 = 131,
+        //    F21 = 132,
+        //    F22 = 133,
+        //    F23 = 134,
+        //    F24 = 135,
+        //    NumLock = 144,
+        //    Scroll = 145,
+        //    LeftShift = 160,
+        //    RightShift = 161,
+        //    LeftControl = 162,
+        //    RightControl = 163,
+        //    LeftAlt = 164,
+        //    RightAlt = 165,
+        //    BrowserBack = 166,
+        //    BrowserForward = 167,
+        //    BrowserRefresh = 168,
+        //    BrowserStop = 169,
+        //    BrowserSearch = 170,
+        //    BrowserFavorites = 171,
+        //    BrowserHome = 172,
+        //    VolumeMute = 173,
+        //    VolumeDown = 174,
+        //    VolumeUp = 175,
+        //    MediaNextTrack = 176,
+        //    MediaPreviousTrack = 177,
+        //    MediaStop = 178,
+        //    MediaPlayPause = 179,
+        //    LaunchMail = 180,
+        //    SelectMedia = 181,
+        //    LaunchApplication1 = 182,
+        //    LaunchApplication2 = 183,
+        //    OemSemicolon = 186,
+        //    OemPlus = 187,
+        //    OemComma = 188,
+        //    OemMinus = 189,
+        //    OemPeriod = 190,
+        //    OemQuestion = 191,
+        //    OemTilde = 192,
+        //    ChatPadGreen = 202,
+        //    ChatPadOrange = 203,
+        //    OemOpenBrackets = 219,
+        //    OemPipe = 220,
+        //    OemCloseBrackets = 221,
+        //    OemQuotes = 222,
+        //    Oem8 = 223,
+        //    OemBackslash = 226,
+        //    ProcessKey = 229,
+        //    OemCopy = 242,
+        //    OemAuto = 243,
+        //    OemEnlW = 244,
+        //    Attn = 246,
+        //    Crsel = 247,
+        //    Exsel = 248,
+        //    EraseEof = 249,
+        //    Play = 250,
+        //    Zoom = 251,
+        //    Pa1 = 253,
+        //    OemClear = 254
+        //}
+
+
+
+
+
+        //#region buffer info
+        //Mesh mesh = Graphics.NewMesh(PositionColorVertex.VertexInfo.formatList, 1, MeshDrawMode.Trangles, SpriteBatchUsage.Dynamic);
+
+        //private byte[] _vertexData;
+        //private int _vertexBufferSize;
+
+        //private ushort[] _indexData;
+        //private int _indexBufferSize;
+        //#endregion
+        //private unsafe void UpdateBuffers(ImDrawDataPtr drawData)
+        //{
+        //    if (drawData.TotalVtxCount == 0)
+        //    {
+        //        return;
+        //    }
+
+        //    // Expand buffers if we need more room
+        //    if (drawData.TotalVtxCount > _vertexBufferSize)
+        //    {
+        //        _vertexBufferSize = (int)(drawData.TotalVtxCount * 1.5f);
+        //        _vertexData = new byte[_vertexBufferSize * _Vert_Size_];
+        //        mesh = Graphics.NewMesh(PositionColorVertex.VertexInfo.formatList, _vertexBufferSize, MeshDrawMode.Trangles, SpriteBatchUsage.Dynamic);
+        //    }
+
+        //    if (drawData.TotalIdxCount > _indexBufferSize)
+        //    {
+        //        _indexBufferSize = (int)(drawData.TotalIdxCount * 1.5f);
+        //        _indexData = new ushort[_indexBufferSize];
+        //    }
+
+        //    // Copy ImGui's vertices and indices to a set of managed byte arrays
+        //    int vtxOffset = 0;
+        //    int idxOffset = 0;
+
+        //    for (int n = 0; n < drawData.CmdListsCount; n++)
+        //    {
+        //        ImDrawListPtr cmdList = drawData.CmdListsRange[n];
+
+        //        fixed (void* vtxDstPtr = &_vertexData[vtxOffset * _Vert_Size_])
+        //        fixed (void* idxDstPtr = &_indexData[idxOffset])
+        //        {
+        //            Buffer.MemoryCopy((void*)cmdList.VtxBuffer.Data, vtxDstPtr, _vertexData.Length, cmdList.VtxBuffer.Size * _Vert_Size_);
+        //            Buffer.MemoryCopy((void*)cmdList.IdxBuffer.Data, idxDstPtr, _indexData.Length * sizeof(ushort), cmdList.IdxBuffer.Size * sizeof(ushort));
+        //        }
+        //        vtxOffset += cmdList.VtxBuffer.Size;
+        //        idxOffset += cmdList.IdxBuffer.Size;
+        //    }
+
+        //    // Copy the managed byte arrays to the gpu vertex- and index buffers
+        //    mesh.SetVertexMap(Trans(_indexData));
+        //    //mesh.SetVertices(0, _vertexData);
+        //}
+
+
+        //public void DrawXXXX()
+        //{
+        //    unsafe
+        //    {
+        //        ImDrawDataPtr drawData = ImGui.GetDrawData();
+
+        //        // update buffer
+        //        UpdateBuffers(drawData);
+
+        //        // draw buffer
+        //        RenderCommandLists(drawData);
+
+        //    }
+        //}
+
+        //void RenderCommandLists(ImDrawDataPtr drawData)
+        //{
+        //    //var c = mesh.GetVertexCount();
+        //    //List<Vector2> debug_lines = new List<Vector2>(3000);
+        //    //for (int i = 0; i < c; i++)
+        //    //{
+        //    //    var vv = PositionColorVertex.Transform(mesh.GetVertex(i));
+        //    //    debug_lines.Add(new Vector2(vv.X, vv.Y));
+        //    //}
+        //    ////Graphics.Line(debug_lines.ToArray());
+        //    //{
+        //    //    for (int i = 0; i < drawData.TotalIdxCount; i += 3)
+        //    //    {
+        //    //        var vd1 = _indexData[i + 0];
+        //    //        var vd2 = _indexData[i + 1];
+        //    //        var vd3 = _indexData[i + 2];
+
+        //    //        var vdd1 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd1, _Vert_Size_).ToArray();
+        //    //        var vdd2 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd2, _Vert_Size_).ToArray();
+        //    //        var vdd3 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd3, _Vert_Size_).ToArray();
+
+        //    //        var pcv1 = PositionColorVertex.Transform(vdd1);
+        //    //        var pcv2 = PositionColorVertex.Transform(vdd2);
+        //    //        var pcv3 = PositionColorVertex.Transform(vdd3);
+        //    //        //Graphics.SetColor(pcv1.Color);
+        //    //        //Graphics.Polygon(DrawMode.Fill, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
+        //    //        mesh.SetVertex(vd1, vdd1);
+        //    //        mesh.SetVertex(vd2, vdd2);
+        //    //        mesh.SetVertex(vd3, vdd3);
+        //    //        //Graphics.Polygon(DrawMode.Line, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
+        //    //        //var data = _vertexData[];
+        //    //    }
+        //    //}
+
+        //    Graphics.SetColor(Color.White);
+        //    int vtxOffset = 0;
+        //    int idxOffset = 0;
+        //    for (int n = 0; n < drawData.CmdListsCount; n++)
+        //    {
+        //        ImDrawListPtr cmdList = drawData.CmdListsRange[n];
+
+        //        for (int cmdi = 0; cmdi < cmdList.CmdBuffer.Size; cmdi++)
+        //        {
+        //            ImDrawCmdPtr drawCmd = cmdList.CmdBuffer[cmdi];
+
+        //            if (!_loadedTextures.TryGetValue(drawCmd.TextureId, out var img))
+        //                throw new InvalidOperationException($"Could not find a texture with id '{drawCmd.TextureId}', please check your bindings");
+
+        //            Graphics.SetScissor(
+        //                (int)drawCmd.ClipRect.X,
+        //                (int)drawCmd.ClipRect.Y,
+        //                (int)(drawCmd.ClipRect.Z - drawCmd.ClipRect.X),
+        //                (int)(drawCmd.ClipRect.W - drawCmd.ClipRect.Y)
+        //            );
+        //            mesh.SetTexture(img);
+
+        //            // set range
+        //            //drawCmd.ClipRect;
+
+        //            {
+        //                for (int i = idxOffset; i < idxOffset + (int)drawCmd.ElemCount; i += 3)
+        //                {
+        //                    var vd1 = _indexData[ i + 0 ];
+        //                    var vd2 = _indexData[ i + 1 ];
+        //                    var vd3 = _indexData[ i + 2 ];
+
+        //                    var vdd1 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd1, _Vert_Size_).ToArray();
+        //                    var vdd2 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd2, _Vert_Size_).ToArray();
+        //                    var vdd3 = _vertexData.AsSpan().Slice(_Vert_Size_ * vd3, _Vert_Size_).ToArray();
+
+        //                    //var pcv1 = PositionColorVertex.Transform(vdd1);
+        //                    //var pcv2 = PositionColorVertex.Transform(vdd2);
+        //                    //var pcv3 = PositionColorVertex.Transform(vdd3);
+        //                    //Graphics.SetColor(pcv1.Color);
+        //                    //Graphics.Polygon(DrawMode.Fill, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
+        //                    mesh.SetVertex(vd1, vdd1);
+        //                    mesh.SetVertex(vd2, vdd2);
+        //                    mesh.SetVertex(vd3, vdd3);
+        //                    //Graphics.Polygon(DrawMode.Line, pcv1.X, pcv1.Y, pcv2.X, pcv2.Y, pcv3.X, pcv3.Y);
+        //                    //var data = _vertexData[];
+        //                }
+        //            }
+
+
+        //            //mesh.SetDrawRange(idxOffset, (int)drawCmd.ElemCount);
+        //            mesh.SetDrawRange((int)(idxOffset + drawCmd.IdxOffset), (int)drawCmd.ElemCount);
+        //            //mesh.SetDrawRange(vtxOffset, (int)cmdList.VtxBuffer.Size);
+        //            //mesh.SetDrawRange(idxOffset, (int)drawCmd.ElemCount / 3);
+        //            Graphics.Draw(mesh);
+
+        //            //                    foreach (var pass in effect.CurrentTechnique.Passes)
+        //            //                    {
+        //            //                        pass.Apply();
+
+        //            //#pragma warning disable CS0618 // // FNA does not expose an alternative method.
+        //            //                        _graphicsDevice.DrawIndexedPrimitives(
+        //            //                            primitiveType: PrimitiveType.TriangleList,
+        //            //                            baseVertex: vtxOffset,
+        //            //                            minVertexIndex: 0,
+        //            //                            numVertices: cmdList.VtxBuffer.Size,
+        //            //                            startIndex: idxOffset,
+        //            //                            primitiveCount: (int)drawCmd.ElemCount / 3
+        //            //                        );
+        //            //#pragma warning restore CS0618
+        //            //                    }
+
+        //            idxOffset += (int)drawCmd.ElemCount;
+        //        }
+        //        vtxOffset += cmdList.VtxBuffer.Size;
+        //    }
+
+
+        //    Graphics.SetScissor();
+        //}
 
     }
 }

@@ -31,6 +31,11 @@ namespace DearLoveGUI.Example
             imGuiRenderer.Update(dt, ImGuiLayout);
         }
 
+        public override void TextInput(string text)
+        {
+            imGuiRenderer.TextInput(text);
+        }
+
         // Direct port of the example at https://github.com/ocornut/imgui/blob/master/examples/sdl_opengl2_example/main.cpp
         private float f = 0.0f;
 
