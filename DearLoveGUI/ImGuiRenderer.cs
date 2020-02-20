@@ -117,24 +117,15 @@ namespace DearLoveGUI
             }
             //io.ConfigFlags |= ImGui.;
             //io.Fonts.AddFontDefault();
-            io.Fonts.AddFontFromFileTTF("G:/font/方正准圆_GBK.TTF", 16.0f);
+            //io.Fonts.AddFontFromFileTTF("G:/font/方正准圆_GBK.TTF", 16.0f);
+
+            // 中文支持
+            io.Fonts.AddFontFromFileTTF("G:/font/msyh.ttf", 16.0f, null, ImGui.GetIO().Fonts.GetGlyphRangesChineseFull());
         }
 
         public void TextInput(string text)
         {
-            Console.WriteLine(text);
-            //foreach (var c in text)
-            //{
-            //    char.ConvertToUtf32()
-            //    ImGui.GetIO().AddInputCharacter(Encoding.Unicode.getco);
-            //}
-            for (var i = 0; i < text.Length; i += char.IsSurrogatePair(text, i) ? 2 : 1)
-            {
-                var codepoint = char.ConvertToUtf32(text, i);
-                ImGui.GetIO().AddInputCharacter((uint)codepoint);
-            }
-
-            //ImGui.GetIO().AddInputCharactersUTF8(text);
+            ImGui.GetIO().AddInputCharactersUTF8(text);
         }
 
         void UpdateInput(float dt)

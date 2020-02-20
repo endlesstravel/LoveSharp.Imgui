@@ -44,12 +44,27 @@ namespace DearLoveGUI.Example
         private Num.Vector3 clear_color = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
         private byte[] _textBuffer = new byte[100];
 
+        static System.Text.Encoding utf8 = System.Text.Encoding.UTF8;
+        static byte[] EmptyStringByteArray = new byte[1] { 0 };
+        public static byte[] GetNullTailUTF8Bytes(string str)
+        {
+            if (str == null)
+            {
+                return EmptyStringByteArray;
+            }
+
+            var bytes = utf8.GetBytes(str);
+            var output = new byte[bytes.Length + 1];
+            Array.Copy(bytes, output, bytes.Length);
+            output[output.Length - 1] = 0;
+            return output;
+        }
         void ImGuiLayout()
         {
             // 1. Show a simple window
             // Tip: if we don't call ImGui.Begin()/ImGui.End() the widgets appears in a window automatically called "Debug"
             {
-                ImGui.Text("Hello, world!");
+                ImGui.Text("Hello, world!【世界】");
                 ImGui.SliderFloat("float", ref f, 0.0f, 1.0f, string.Empty, 1f);
                 ImGui.ColorEdit3("clear color", ref clear_color);
                 if (ImGui.Button("Test Window")) show_test_window = !show_test_window;
