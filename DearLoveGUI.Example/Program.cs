@@ -13,12 +13,12 @@ namespace DearLoveGUI.Example
 {
     class Program : Scene
     {
-        ImGuiRenderer imGuiRenderer = new ImGuiRenderer();
+        ImGuiRenderer imGuiRenderer = new ImGuiRenderer("G:/font/msyh.ttf", 18);
         private IntPtr _imGuiTexture;
 
         public override void Load()
         {
-            _imGuiTexture = imGuiRenderer.BindTexture(CreateTexture(300, 150, pixel =>
+            _imGuiTexture = imGuiRenderer.Texture(CreateTexture(300, 150, pixel =>
             {
                 var red = (pixel % 300) / 2;
                 return new Color((byte)red, 1, 1, 255);
@@ -117,8 +117,9 @@ namespace DearLoveGUI.Example
             Helper.InitEngine();
             Boot.Init(new BootConfig()
             {
-                WindowWidth = 1200,
-                WindowHeight = 700,
+                WindowWidth = 1700,
+                WindowHeight = 800,
+                WindowResizable = true,
             });
             Boot.Run(new Program());
         }

@@ -13,9 +13,15 @@ namespace DearLoveGUI
     public class ImGuiRenderer
     {
         // Textures
-        readonly private Dictionary<IntPtr, Image> _loadedTextures = new Dictionary<IntPtr, Image>();
+        readonly private Dictionary<IntPtr, Texture> _loadedTextures = new Dictionary<IntPtr, Texture>();
+        readonly private Dictionary<Texture, IntPtr> _loadedTexturesCacheImage = new Dictionary<Texture, IntPtr>();
+        readonly private Dictionary<string, IntPtr> _loadedTexturesCachePath = new Dictionary<string, IntPtr>();
+
         private int _textureId;
         private IntPtr? _fontTextureId;
+
+        static public Image DefaultPathImageLoader(string path)
+            => Graphics.NewImage(path);
 
         readonly static Dictionary<ImGuiKey, KeyConstant> _keys_map = new Dictionary<ImGuiKey, KeyConstant>()
         {
@@ -39,12 +45,19 @@ namespace DearLoveGUI
                 {ImGuiKey.Y, KeyConstant.Y },
                 {ImGuiKey.Z, KeyConstant.Z },
         };
-
-        public ImGuiRenderer()
+        Func<string, Image>  imageLoader;
+        public ImGuiRenderer(string fontPath, float fontSize, Func<string, Image> imageLoader = null)
         {
+            // 加载器
+            this.imageLoader = imageLoader ?? DefaultPathImageLoader;
+
+            // 建立 context
             var context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             SetupInput();
+
+            // 中文支持
+            ImGui.GetIO().Fonts.AddFontFromFileTTF(fontPath, fontSize, null, ImGui.GetIO().Fonts.GetGlyphRangesChineseFull());
             RebuildFontAtlas();
         }
 
@@ -80,13 +93,31 @@ namespace DearLoveGUI
         /// <summary>
         /// Creates a pointer to a texture, which can be passed through ImGui calls such as <see cref="ImGui.Image" />. That pointer is then used by ImGui to let us know what texture to draw
         /// </summary>
-        public virtual IntPtr BindTexture(Image texture)
+        public virtual IntPtr BindTexture(Texture texture)
         {
             var id = new IntPtr(_textureId++);
-
             _loadedTextures.Add(id, texture);
-
             return id;
+        }
+
+        public IntPtr Texture(string path)
+        {
+            if (_loadedTexturesCachePath.TryGetValue(path, out var imgPtr) == false)
+            {
+                imgPtr = BindTexture(imageLoader(path));
+                _loadedTexturesCachePath[path] = imgPtr;
+            }
+            return imgPtr;
+        }
+
+        public IntPtr Texture(Texture tex)
+        {
+            if (_loadedTexturesCacheImage.TryGetValue(tex, out var imgPtr) == false)
+            {
+                imgPtr = BindTexture(tex);
+                _loadedTexturesCacheImage[tex] = imgPtr;
+            }
+            return imgPtr;
         }
 
         /// <summary>
@@ -118,9 +149,6 @@ namespace DearLoveGUI
             //io.ConfigFlags |= ImGui.;
             //io.Fonts.AddFontDefault();
             //io.Fonts.AddFontFromFileTTF("G:/font/方正准圆_GBK.TTF", 16.0f);
-
-            // 中文支持
-            io.Fonts.AddFontFromFileTTF("G:/font/msyh.ttf", 16.0f, null, ImGui.GetIO().Fonts.GetGlyphRangesChineseFull());
         }
 
         public void TextInput(string text)
@@ -128,6 +156,7 @@ namespace DearLoveGUI
             ImGui.GetIO().AddInputCharactersUTF8(text);
         }
 
+      
         void UpdateInput(float dt)
         {
             var io = ImGui.GetIO();
