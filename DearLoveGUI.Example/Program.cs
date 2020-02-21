@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DearLoveGUI;
 using Love;
-using System;
 using System.IO;
 using Num = System.Numerics;
 using ImGuiNET;
@@ -44,21 +43,6 @@ namespace DearLoveGUI.Example
         private Num.Vector3 clear_color = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
         private byte[] _textBuffer = new byte[100];
 
-        static System.Text.Encoding utf8 = System.Text.Encoding.UTF8;
-        static byte[] EmptyStringByteArray = new byte[1] { 0 };
-        public static byte[] GetNullTailUTF8Bytes(string str)
-        {
-            if (str == null)
-            {
-                return EmptyStringByteArray;
-            }
-
-            var bytes = utf8.GetBytes(str);
-            var output = new byte[bytes.Length + 1];
-            Array.Copy(bytes, output, bytes.Length);
-            output[output.Length - 1] = 0;
-            return output;
-        }
         void ImGuiLayout()
         {
             // 1. Show a simple window
@@ -71,7 +55,14 @@ namespace DearLoveGUI.Example
                 if (ImGui.Button("Another Window")) show_another_window = !show_another_window;
                 ImGui.Text(string.Format("Application average {0:F3} ms/frame ({1:F1} FPS)", 1000f / ImGui.GetIO().Framerate, ImGui.GetIO().Framerate));
 
-                ImGui.InputText("Text input", _textBuffer, 100);
+                ImGui.InputText("Text input", _textBuffer, 100, ImGuiInputTextFlags.EnterReturnsTrue);
+
+                {
+                    var anc = ImGui.GetItemRectMin();
+                    var siz = ImGui.GetItemRectSize();
+                    Keyboard.SetTextInput(ImGui.IsItemActive(), anc.X, anc.Y, siz.X, siz.Y);
+                }
+
 
                 ImGui.Text("Texture sample");
                 ImGui.Image(_imGuiTexture, new Num.Vector2(300, 150), Num.Vector2.Zero, Num.Vector2.One, Num.Vector4.One, Num.Vector4.One); // Here, the previously loaded texture is used
