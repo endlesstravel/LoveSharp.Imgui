@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Love;
-using static Love.Misc.MeshUtils;
 
 namespace DearLoveGUI
 {
@@ -180,16 +179,16 @@ namespace DearLoveGUI
     [StructLayout(LayoutKind.Explicit)]
     struct PositionColorVertex
     {
-        [FieldOffset(0), Name("VertexPosition")] public float X;
-        [FieldOffset(4), Name("VertexPosition")] public float Y;
+        [FieldOffset(0), MeshAttributeName("VertexPosition")] public float X;
+        [FieldOffset(4), MeshAttributeName("VertexPosition")] public float Y;
 
-        [FieldOffset(8), Name("VertexTexCoord")] public float U;
-        [FieldOffset(12), Name("VertexTexCoord")] public float V;
+        [FieldOffset(8), MeshAttributeName("VertexTexCoord")] public float U;
+        [FieldOffset(12), MeshAttributeName("VertexTexCoord")] public float V;
 
-        [FieldOffset(16), Name("VertexColor")] public byte R;
-        [FieldOffset(17), Name("VertexColor")] public byte G;
-        [FieldOffset(18), Name("VertexColor")] public byte B;
-        [FieldOffset(19), Name("VertexColor")] public byte A;
+        [FieldOffset(16), MeshAttributeName("VertexColor")] public byte R;
+        [FieldOffset(17), MeshAttributeName("VertexColor")] public byte G;
+        [FieldOffset(18), MeshAttributeName("VertexColor")] public byte B;
+        [FieldOffset(19), MeshAttributeName("VertexColor")] public byte A;
 
         [FieldOffset(0)] byte b_x1;
         [FieldOffset(1)] byte b_x2;
@@ -208,7 +207,7 @@ namespace DearLoveGUI
         [FieldOffset(14)] byte b_v3;
         [FieldOffset(15)] byte b_v4;
 
-        public readonly static Info<PositionColorVertex> VertexInfo = Parse<PositionColorVertex>();
+        public readonly static MeshFormatDescribe<PositionColorVertex> VertexInfo = MeshFormatDescribe.New<PositionColorVertex>();
 
 
         public Color Color

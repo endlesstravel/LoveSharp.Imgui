@@ -100,6 +100,7 @@ namespace DearLoveGUI.Example
             //set the color
             var imgData = Image.NewImageData(width, height);
             imgData.SetPixels(data);
+            //imgData.SetPixels(0, 0, imgData.GetWidth(), imgData.GetHeight(), data);
 
             return Graphics.NewImage(imgData);
         }

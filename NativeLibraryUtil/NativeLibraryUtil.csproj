@@ -34,7 +34,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NativeLibraryUtil.cs" />
+    <Compile Include="..\..\..\Love2DCS_Dev\Love2dCS\csharp_src\NativeLibraryUtil.cs">
+      <Link>NativeLibraryUtil.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

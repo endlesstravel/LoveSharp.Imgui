@@ -232,7 +232,8 @@ namespace DearLoveGUI
                         Buffer.MemoryCopy((void*)cmdList.VtxBuffer.Data, vtxDstPtr, _vertexData.Length, cmdList.VtxBuffer.Size * _Vert_Size_);
                         Buffer.MemoryCopy((void*)cmdList.IdxBuffer.Data, idxDstPtr, _indexData.Length * sizeof(ushort), cmdList.IdxBuffer.Size * sizeof(ushort));
                     }
-                    var mesh = Graphics.NewMesh(PositionColorVertex.VertexInfo.formatList, _vertexData,
+
+                    var mesh = Graphics.NewMesh(PositionColorVertex.VertexInfo, _vertexData,
                         MeshDrawMode.Trangles, SpriteBatchUsage.Dynamic);
                     mesh.SetVertexMap(Trans(_indexData));
 
