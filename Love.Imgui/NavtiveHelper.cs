@@ -1,15 +1,15 @@
-﻿using NativeLibraryUtil;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static Love.NativeLibraryUtil;
 
 namespace ImGuiNET
 {
-    public class NavtiveHelp
+    class NavtiveHelper
     {
         public static byte[] GetEmbedResourceWithMatchName(Func<string, bool> adj)
         {

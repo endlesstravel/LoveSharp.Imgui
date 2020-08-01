@@ -226,7 +226,6 @@
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Util.cs">
       <Link>Util.cs</Link>
     </Compile>
-    <Compile Include="NavtiveHelp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -237,12 +236,6 @@
   <ItemGroup>
     <EmbeddedResource Include="cimgui\win-x64\cimgui.dll" />
     <EmbeddedResource Include="cimgui\win-x86\cimgui.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NativeLibraryUtil\NativeLibraryUtil.csproj">
-      <Project>{43f68cd8-5610-4528-8b2b-44d15d56915f}</Project>
-      <Name>NativeLibraryUtil</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
