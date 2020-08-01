@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Love.Imgui", "Love.Imgui\Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Love.Imgui.Example", "Love.Imgui.Example\Love.Imgui.Example.csproj", "{810B8649-CFFC-42F3-A706-4EB9C0C8906B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTestNugetPakcage", "ConsoleAppTestNugetPakcage\ConsoleAppTestNugetPakcage.csproj", "{E5AFD202-4C18-4069-96B4-6231B0C6E9E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{810B8649-CFFC-42F3-A706-4EB9C0C8906B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{810B8649-CFFC-42F3-A706-4EB9C0C8906B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{810B8649-CFFC-42F3-A706-4EB9C0C8906B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5AFD202-4C18-4069-96B4-6231B0C6E9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5AFD202-4C18-4069-96B4-6231B0C6E9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5AFD202-4C18-4069-96B4-6231B0C6E9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5AFD202-4C18-4069-96B4-6231B0C6E9E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

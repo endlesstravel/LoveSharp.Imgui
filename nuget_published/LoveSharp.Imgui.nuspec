@@ -16,6 +16,15 @@
 1.0 release
         </releaseNotes>
         <tags>LÖVE game-engine gui LoveSharp</tags>
+
+        
+    
+        <dependencies>
+            <dependency id="LoveSharp" version="11.0.50" />
+            <dependency id="System.Buffers" version="4.5.1" />
+            <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        </dependencies>
+
     </metadata>
 
 
@@ -29,4 +38,5 @@
         <file src="..\bin_Release\LoveSharp.Imgui.xml" target="lib\netstandard1.0" /> <!-- 注释文档 -->
 
     </files>
+
 </package>
