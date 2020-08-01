@@ -6,4 +6,7 @@
 
 # usage :
 
-`git clone --recursive https://gitee.com/endlesstravel/DearLoveGUI.git`
+<!-- `git clone --recursive https://gitee.com/endlesstravel/DearLoveGUI.git` -->
+
+
+安装 nuget 包即可 : https://www.nuget.org/packages/LoveSharp.Imgui
