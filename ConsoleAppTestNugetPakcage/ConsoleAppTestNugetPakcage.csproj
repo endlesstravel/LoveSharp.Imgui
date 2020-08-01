@@ -36,9 +36,6 @@
     <Reference Include="LoveSharp, Version=11.0.50.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LoveSharp.11.0.50\lib\netstandard1.2\LoveSharp.dll</HintPath>
     </Reference>
-    <Reference Include="LoveSharp.Imgui, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca102d57e97ab8bd, processorArchitecture=MSIL">
-      <HintPath>..\packages\LoveSharp.Imgui.1.0.0\lib\net461\LoveSharp.Imgui.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
