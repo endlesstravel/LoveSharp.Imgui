@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DearLoveGUI.Example", "Dear
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Love.Imgui", "Love.Imgui\Love.Imgui.csproj", "{D7B122BC-34E2-404B-B851-04530098CA23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Love.Imgui.Example", "Love.Imgui.Example\Love.Imgui.Example.csproj", "{810B8649-CFFC-42F3-A706-4EB9C0C8906B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D7B122BC-34E2-404B-B851-04530098CA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7B122BC-34E2-404B-B851-04530098CA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7B122BC-34E2-404B-B851-04530098CA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{810B8649-CFFC-42F3-A706-4EB9C0C8906B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{810B8649-CFFC-42F3-A706-4EB9C0C8906B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{810B8649-CFFC-42F3-A706-4EB9C0C8906B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{810B8649-CFFC-42F3-A706-4EB9C0C8906B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,21 +1,44 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Love.Imgui.key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyName>LoveSharp.Imgui</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>D:\OtherDev\DearLoveGUI\bin_Release\</OutputPath>
+    <DocumentationFile>D:\OtherDev\DearLoveGUI\bin_Release\LoveSharp.Imgui.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="LoveSharp" Version="11.0.50" />
-    <PackageReference Include="System.Buffers" Version="4.5.1" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <None Remove="cimgui\linux-x64\cimgui.so" />
+    <None Remove="cimgui\osx-x64\cimgui.dylib" />
+    <None Remove="cimgui\win-x64\cimgui.dll" />
+    <None Remove="cimgui\win-x86\cimgui.dll" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImGui.Sharp\ImGui.Sharp.csproj" />
+    <EmbeddedResource Include="cimgui\linux-x64\cimgui.so" />
+    <EmbeddedResource Include="cimgui\osx-x64\cimgui.dylib" />
+    <EmbeddedResource Include="cimgui\win-x64\cimgui.dll" />
+    <EmbeddedResource Include="cimgui\win-x86\cimgui.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LoveSharp" Version="11.0.50" />
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Generated\" />
   </ItemGroup>
 
 </Project>

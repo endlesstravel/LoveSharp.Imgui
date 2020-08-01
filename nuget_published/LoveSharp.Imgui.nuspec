@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+
+    <metadata>
+        <!-- Required elements-->
+        <id>LoveSharp.Imgui</id>
+        <version>1.0.0</version>
+        <description>imgui for LoveSharp LÖVE </description>
+        <authors>endlesstravel</authors>
+
+        <!-- Optional elements -->
+        <title>LoveSharp.Imgui</title>
+        <projectUrl>https://github.com/endlesstravel/LoveSharp.Imgui</projectUrl>
+
+        <releaseNotes>
+1.0 release
+        </releaseNotes>
+        <tags>LÖVE game-engine gui LoveSharp</tags>
+    </metadata>
+
+
+    <!-- Optional 'files' node -->
+    <files>
+
+        <file src="..\bin_Release\net461\LoveSharp.Imgui.dll" target="lib\net461" />
+        <file src="..\bin_Release\LoveSharp.Imgui.xml" target="lib\net461" /> <!-- 注释文档 -->
+
+        <file src="..\bin_Release\net461\LoveSharp.Imgui.dll" target="lib\netstandard1.0" />  <!-- dotcore 1.0 / net45 / Mono 4.6 / Unity 2018.1 -->
+        <file src="..\bin_Release\LoveSharp.Imgui.xml" target="lib\netstandard1.0" /> <!-- 注释文档 -->
+
+    </files>
+</package>

@@ -11,7 +11,8 @@ namespace DearLoveGUI
     {
         static public void InitEngine()
         {
-            NavtiveHelp.InitEngine();
+            throw new Exception();
+            //NavtiveHelp.InitEngine();
         }
     }
 }

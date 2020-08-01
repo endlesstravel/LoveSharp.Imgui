@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LoveSharp.Imgui</name>
+    </assembly>
+    <members>
+        <member name="M:Love.Imgui.Renderer.RebuildFontAtlas">
+            <summary>
+            Creates a texture and loads the font data from ImGui. Should be called when the <see cref="!:GraphicsDevice" /> is initialized but before any rendering is done
+            </summary>
+        </member>
+        <member name="M:Love.Imgui.Renderer.BindTexture(Love.Texture)">
+            <summary>
+            Creates a pointer to a texture, which can be passed through ImGui calls such as <see cref="M:ImGuiNET.ImGui.Image(System.IntPtr,Love.Vector2)" />. That pointer is then used by ImGui to let us know what texture to draw
+            </summary>
+        </member>
+        <member name="M:Love.Imgui.Renderer.UnbindTexture(System.IntPtr)">
+            <summary>
+            Removes a previously created texture pointer, releasing its reference and allowing it to be deallocated
+            </summary>
+        </member>
+    </members>
+</doc>
