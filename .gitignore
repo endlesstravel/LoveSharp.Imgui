@@ -355,3 +355,5 @@ Ref/
 nuget_published/distribute
 nuget_published/build
 nuget_published/cpfile
+
+bin_Release/
