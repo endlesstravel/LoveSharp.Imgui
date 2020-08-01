@@ -10,7 +10,8 @@
 
         <!-- Optional elements -->
         <title>LoveSharp.Imgui</title>
-        <projectUrl>https://github.com/endlesstravel/LoveSharp.Imgui</projectUrl>
+        <projectUrl>https://github.com/endlesstravel/DearLoveGUI</projectUrl>
+        <iconUrl>https://gitee.com/endlesstravel/DearLoveGUI/raw/master/logo-x.png</iconUrl>
 
         <releaseNotes>
 1.0 release
