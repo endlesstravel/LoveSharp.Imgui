@@ -21,7 +21,7 @@
         
     
         <dependencies>
-            <dependency id="LoveSharp" version="11.0.50" />
+            <dependency id="LoveSharp" version="11.0.51" />
             <dependency id="System.Buffers" version="4.5.1" />
             <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
         </dependencies>

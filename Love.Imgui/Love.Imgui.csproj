@@ -1,10 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Love.Imgui.key.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>LoveSharp.Imgui</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>endlesstravel</Authors>
+    <Product />
+    <PackageProjectUrl>https://github.com/endlesstravel/DearLoveGUI</PackageProjectUrl>
+    <PackageIconUrl>https://gitee.com/endlesstravel/DearLoveGUI/raw/master/logo-x.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/endlesstravel/DearLoveGUI</RepositoryUrl>
+    <Description>imgui for LoveSharp LÖVE</Description>
+    <PackageReleaseNotes>imgui for LoveSharp LÖVE</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -32,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LoveSharp" Version="11.0.50" />
+    <PackageReference Include="LoveSharp" Version="11.0.51" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.1" />
   </ItemGroup>

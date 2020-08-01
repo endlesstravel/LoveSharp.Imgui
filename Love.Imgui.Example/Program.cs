@@ -115,6 +115,9 @@ namespace DearLoveGUI.Example
 
         static void Main(string[] args)
         {
+            var asy = System.Reflection.Assembly.GetAssembly(typeof(Boot));
+            Console.WriteLine(asy);
+
             Boot.Init(new BootConfig()
             {
                 WindowWidth = 1700,
