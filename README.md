@@ -1,9 +1,7 @@
 
-# ImGui for Love2dCS
+## ImGui for Love2dCS
 
-check `DearLoveGUI.Example` to get how to use.
+1. install nuget : https://www.nuget.org/packages/LoveSharp.Imgui
+2. just check `ConsoleAppTestNugetPakcage/Program.cs` to get how to use.
 
-# usage :
 
-
-just install nuget : https://www.nuget.org/packages/LoveSharp.Imgui
