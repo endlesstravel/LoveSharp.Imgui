@@ -116,6 +116,7 @@ namespace DearLoveGUI.Example
         static void Main(string[] args)
         {
             Helper.InitEngine();
+            //Love.Imgui.EngineConfigure.Init();
             Boot.Init(new BootConfig()
             {
                 WindowWidth = 1700,

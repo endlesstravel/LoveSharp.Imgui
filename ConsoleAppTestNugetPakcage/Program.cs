@@ -84,7 +84,58 @@ namespace DearLoveGUI.Example
                 ImGui.SetNextWindowPos(new Vector2(650, 20), ImGuiCond.FirstUseEver);
                 ImGui.ShowDemoWindow(ref show_test_window);
             }
+
+            //dock test
+            if (LoveSharp_Imgui.Thirdparty.Dock.DockWindow.BeginDockspace("my_dock"))
+            {
+                // dock layout by hard-coded or .ini file
+
+                if (LoveSharp_Imgui.Thirdparty.Dock.DockWindow.BeginDock("Dock 1"))
+                {
+                    ImGui.Text("I'm Wubugui!");
+                }
+                LoveSharp_Imgui.Thirdparty.Dock.DockWindow.EndDock();
+
+                if (LoveSharp_Imgui.Thirdparty.Dock.DockWindow.BeginDock("Dock 2"))
+                {
+                    ImGui.Text("I'm BentleyBlanks!");
+                }
+                LoveSharp_Imgui.Thirdparty.Dock.DockWindow.EndDock();
+
+                if (LoveSharp_Imgui.Thirdparty.Dock.DockWindow.BeginDock("Dock 3"))
+                {
+                    ImGui.Text("I'm LonelyWaiting!");
+                }
+                LoveSharp_Imgui.Thirdparty.Dock.DockWindow.EndDock();
+
+                LoveSharp_Imgui.Thirdparty.Dock.DockWindow.EndDockspace();
+            }
+
+            //dock_dc.UpdateAndDraw(new Vector2(500, 500));
         }
+
+        //LoveSharp_Imgui.Thirdparty.Dock.DockContext dock_dc = LoveSharp_Imgui.Thirdparty.Dock.DockBuilder.Build(
+        //    new LoveSharp_Imgui.Thirdparty.Dock.DockStruct()
+        //    {
+        //        Name = "Dock1", CloseButton = true, MinSize = Vector2.Zero,
+        //        Slot = LoveSharp_Imgui.Thirdparty.Dock.DockSlot.None, Active = true,
+        //        DrawFunction = (s) =>
+        //        {
+        //            ImGui.Text("Hello :)");
+        //        }
+        //    }, new LoveSharp_Imgui.Thirdparty.Dock.DockStruct()
+        //    {
+        //        Name = "Dock2",
+        //        CloseButton = true,
+        //        MinSize = new Vector2(250, 300),
+        //        Slot = LoveSharp_Imgui.Thirdparty.Dock.DockSlot.Right,
+        //        Active = true,
+        //        Size = 250,
+        //        DrawFunction = (s) =>
+        //        {
+        //            ImGui.Text("Hello From Dock2 :)");
+        //        }
+        //    });
 
         public static Image CreateTexture(int width, int height, Func<int, Color> paint)
         {
