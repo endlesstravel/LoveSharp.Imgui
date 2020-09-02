@@ -44,9 +44,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\CustomRect.gen.cs">
-      <Link>Generated\CustomRect.gen.cs</Link>
-    </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImColor.gen.cs">
       <Link>Generated\ImColor.gen.cs</Link>
     </Compile>
@@ -80,6 +77,9 @@
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImFontAtlas.gen.cs">
       <Link>Generated\ImFontAtlas.gen.cs</Link>
     </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImFontAtlasCustomRect.gen.cs">
+      <Link>Generated\ImFontAtlasCustomRect.gen.cs</Link>
+    </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImFontAtlasFlags.gen.cs">
       <Link>Generated\ImFontAtlasFlags.gen.cs</Link>
     </Compile>
@@ -97,6 +97,9 @@
     </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiBackendFlags.gen.cs">
       <Link>Generated\ImGuiBackendFlags.gen.cs</Link>
+    </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiButtonFlags.gen.cs">
+      <Link>Generated\ImGuiButtonFlags.gen.cs</Link>
     </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiCol.gen.cs">
       <Link>Generated\ImGuiCol.gen.cs</Link>
@@ -119,6 +122,9 @@
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiDir.gen.cs">
       <Link>Generated\ImGuiDir.gen.cs</Link>
     </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiDockNodeFlags.gen.cs">
+      <Link>Generated\ImGuiDockNodeFlags.gen.cs</Link>
+    </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiDragDropFlags.gen.cs">
       <Link>Generated\ImGuiDragDropFlags.gen.cs</Link>
     </Compile>
@@ -140,8 +146,14 @@
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiKey.gen.cs">
       <Link>Generated\ImGuiKey.gen.cs</Link>
     </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiKeyModFlags.gen.cs">
+      <Link>Generated\ImGuiKeyModFlags.gen.cs</Link>
+    </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiListClipper.gen.cs">
       <Link>Generated\ImGuiListClipper.gen.cs</Link>
+    </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiMouseButton.gen.cs">
+      <Link>Generated\ImGuiMouseButton.gen.cs</Link>
     </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiMouseCursor.gen.cs">
       <Link>Generated\ImGuiMouseCursor.gen.cs</Link>
@@ -158,11 +170,23 @@
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiPayload.gen.cs">
       <Link>Generated\ImGuiPayload.gen.cs</Link>
     </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiPlatformIO.gen.cs">
+      <Link>Generated\ImGuiPlatformIO.gen.cs</Link>
+    </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiPlatformMonitor.gen.cs">
+      <Link>Generated\ImGuiPlatformMonitor.gen.cs</Link>
+    </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiPopupFlags.gen.cs">
+      <Link>Generated\ImGuiPopupFlags.gen.cs</Link>
+    </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiSelectableFlags.gen.cs">
       <Link>Generated\ImGuiSelectableFlags.gen.cs</Link>
     </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiSizeCallbackData.gen.cs">
       <Link>Generated\ImGuiSizeCallbackData.gen.cs</Link>
+    </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiSliderFlags.gen.cs">
+      <Link>Generated\ImGuiSliderFlags.gen.cs</Link>
     </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiStorage.gen.cs">
       <Link>Generated\ImGuiStorage.gen.cs</Link>
@@ -185,14 +209,23 @@
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiTextFilter.gen.cs">
       <Link>Generated\ImGuiTextFilter.gen.cs</Link>
     </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiTextRange.gen.cs">
+      <Link>Generated\ImGuiTextRange.gen.cs</Link>
+    </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiTreeNodeFlags.gen.cs">
       <Link>Generated\ImGuiTreeNodeFlags.gen.cs</Link>
     </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiViewport.gen.cs">
+      <Link>Generated\ImGuiViewport.gen.cs</Link>
+    </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiViewportFlags.gen.cs">
+      <Link>Generated\ImGuiViewportFlags.gen.cs</Link>
+    </Compile>
+    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiWindowClass.gen.cs">
+      <Link>Generated\ImGuiWindowClass.gen.cs</Link>
+    </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\ImGuiWindowFlags.gen.cs">
       <Link>Generated\ImGuiWindowFlags.gen.cs</Link>
-    </Compile>
-    <Compile Include="..\ImGui.NET\src\ImGui.NET\Generated\TextRange.gen.cs">
-      <Link>Generated\TextRange.gen.cs</Link>
     </Compile>
     <Compile Include="..\ImGui.NET\src\ImGui.NET\ImDrawData.Manual.cs">
       <Link>ImDrawData.Manual.cs</Link>

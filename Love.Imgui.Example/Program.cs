@@ -18,6 +18,7 @@ namespace DearLoveGUI.Example
 
         public override void Load()
         {
+            Console.WriteLine(ImGui.GetVersion());
             _imGuiTexture = imGuiRenderer.Texture(CreateTexture(300, 150, pixel =>
             {
                 var red = (pixel % 300) / 2;
