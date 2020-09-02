@@ -26,27 +26,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="cimgui\linux-x64\cimgui.so" />
-    <None Remove="cimgui\osx-x64\cimgui.dylib" />
-    <None Remove="cimgui\win-x64\cimgui.dll" />
-    <None Remove="cimgui\win-x86\cimgui.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="cimgui\linux-x64\cimgui.so" />
-    <EmbeddedResource Include="cimgui\osx-x64\cimgui.dylib" />
-    <EmbeddedResource Include="cimgui\win-x64\cimgui.dll" />
-    <EmbeddedResource Include="cimgui\win-x86\cimgui.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="LoveSharp" Version="11.0.51" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="cimgui\linux-x64\" />
+    <Folder Include="cimgui\osx-x64\" />
+    <Folder Include="cimgui\win-x64\" />
+    <Folder Include="cimgui\win-x86\" />
     <Folder Include="Generated\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\ImGui.NET\deps\cimgui\linux-x64\cimgui.so" Link="cimgui\linux-x64\cimgui.so" />
+    <EmbeddedResource Include="..\ImGui.NET\deps\cimgui\osx-x64\cimgui.dylib" Link="cimgui\osx-x64\cimgui.dylib" />
+    <EmbeddedResource Include="..\ImGui.NET\deps\cimgui\win-x64\cimgui.dll" Link="cimgui\win-x64\cimgui.dll" />
+    <EmbeddedResource Include="..\ImGui.NET\deps\cimgui\win-x86\cimgui.dll" Link="cimgui\win-x86\cimgui.dll" />
   </ItemGroup>
 
 </Project>
