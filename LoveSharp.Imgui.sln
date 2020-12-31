@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImGui.Sharp", "ImGui.Sharp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DearLoveGUI.Example", "DearLoveGUI.Example\DearLoveGUI.Example.csproj", "{6F8AD20E-8376-48B1-94DD-82E5F5301219}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Love.Imgui", "Love.Imgui\Love.Imgui.csproj", "{D7B122BC-34E2-404B-B851-04530098CA23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Love.Imgui", "Love.Imgui\Love.Imgui.csproj", "{D7B122BC-34E2-404B-B851-04530098CA23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Love.Imgui.Example", "Love.Imgui.Example\Love.Imgui.Example.csproj", "{810B8649-CFFC-42F3-A706-4EB9C0C8906B}"
 EndProject
